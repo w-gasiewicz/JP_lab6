@@ -19,6 +19,8 @@ import java.util.Random;
  */
 public abstract class Figura implements Runnable, ActionListener {
 
+	AnimatorApp panel = new AnimatorApp();
+	
 	// wspolny bufor
 	protected Graphics2D buffer;
 	protected Area area;
@@ -37,7 +39,7 @@ public abstract class Figura implements Runnable, ActionListener {
 	private int width;
 	private int height;
 	private Color clr;
-
+	
 	protected static final Random rand = new Random();
 
 	public Figura(Graphics2D buf, int del, int w, int h) {
@@ -82,14 +84,14 @@ public abstract class Figura implements Runnable, ActionListener {
 		Rectangle bounds = area.getBounds();
 		int cx = bounds.x + bounds.width / 2;
 		int cy = bounds.y + bounds.height / 2;
-		// odbicie
-		if (cx < 0 || cx > width)
+		// odbicie to musi byc od rozmiarow panelka
+		if (cx < 0 || cx > width-10)
 			dx = -dx;
-		if (cy < 0 || cy > height)
+		if (cy < 0 || cy > height-10)
 			dy = -dy;
 		// zwiekszenie lub zmniejszenie
-		if (bounds.height > height / 3 || bounds.height < 10)
-			sf = 1 / sf;
+		if (bounds.height > height/3 || bounds.height < 10)
+			sf = 1 / sf;//srednica?
 		// konstrukcja przeksztalcenia
 		aft.translate(cx, cy);
 		aft.scale(sf, sf);

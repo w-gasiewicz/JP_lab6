@@ -26,13 +26,17 @@ public class AnimPanel extends JPanel implements ActionListener {
 	private int delay = 30;
 
 	private Timer timer;
-
+	private Timer t=new Timer(delay, null);
+	
 	private static int numer = 0;
+	long time,start,stop;
 
 	public AnimPanel() {
 		super();
 		setBackground(Color.WHITE);
 		timer = new Timer(delay, this);
+		//setLayout(new GridBagLayout());
+		//stoptime = new Timer(delay,this);
 	}
 
 	public void initialize() {
@@ -43,7 +47,8 @@ public class AnimPanel extends JPanel implements ActionListener {
 		buffer = (Graphics2D) image.getGraphics();
 		buffer.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		device = (Graphics2D) getGraphics();
-		device.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			device.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		setBackground(Color.WHITE);
 	}
 
 	void addFig() {
@@ -51,16 +56,30 @@ public class AnimPanel extends JPanel implements ActionListener {
 				: new Elipsa(buffer, delay, getWidth(), getHeight());
 		timer.addActionListener(fig);
 		new Thread(fig).start();
-	}
+		}
 
-	void animate() {
+	void animate() { 
+		start=System.nanoTime();
 		if (timer.isRunning()) {
 			timer.stop();
-		} else {
+			
+		}  else{
+			
 			timer.start();
+			
 		}
 	}
-
+	void startAnim()
+	{long start=System.nanoTime();
+		
+	long stop=System.nanoTime();
+	long time=stop-start;
+	timer.start();
+	}
+	void stopAnim ()
+	{
+		
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		device.drawImage(image, 0, 0, null);

@@ -4,6 +4,7 @@
 package figury;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
@@ -19,6 +20,9 @@ import java.util.Random;
  */
 public abstract class Figura implements Runnable, ActionListener {
 
+	AnimatorApp panel = new AnimatorApp();
+	Dimension panelDimension=panel.getcontentPane();
+	
 	// wspolny bufor
 	protected Graphics2D buffer;
 	protected Area area;
@@ -37,7 +41,7 @@ public abstract class Figura implements Runnable, ActionListener {
 	private int width;
 	private int height;
 	private Color clr;
-
+	
 	protected static final Random rand = new Random();
 
 	public Figura(Graphics2D buf, int del, int w, int h) {
@@ -82,13 +86,13 @@ public abstract class Figura implements Runnable, ActionListener {
 		Rectangle bounds = area.getBounds();
 		int cx = bounds.x + bounds.width / 2;
 		int cy = bounds.y + bounds.height / 2;
-		// odbicie
+		// odbicie 
 		if (cx < 0 || cx > width)
 			dx = -dx;
 		if (cy < 0 || cy > height)
 			dy = -dy;
 		// zwiekszenie lub zmniejszenie
-		if (bounds.height > height / 3 || bounds.height < 10)
+		if (bounds.height > height/3 || bounds.height < 10)
 			sf = 1 / sf;
 		// konstrukcja przeksztalcenia
 		aft.translate(cx, cy);

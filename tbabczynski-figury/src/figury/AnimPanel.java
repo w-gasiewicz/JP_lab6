@@ -26,12 +26,15 @@ public class AnimPanel extends JPanel implements ActionListener {
 	private int delay = 30;
 
 	private Timer timer;
-
+	
 	private static int numer = 0;
+	long time,start,stop;
 
 	public AnimPanel() {
 		super();
 		setBackground(Color.WHITE);
+		setOpaque(true);//?
+		//setPreferredSize(new Dimension(600,300));
 		timer = new Timer(delay, this);
 	}
 
@@ -51,16 +54,31 @@ public class AnimPanel extends JPanel implements ActionListener {
 				: new Elipsa(buffer, delay, getWidth(), getHeight());
 		timer.addActionListener(fig);
 		new Thread(fig).start();
-	}
+		
+		}
 
-	void animate() {
+	void animate() { 
+		start=System.nanoTime();
 		if (timer.isRunning()) {
 			timer.stop();
-		} else {
+		}  else{
+			
 			timer.start();
 		}
 	}
-
+	 		class StartListener implements ActionListener {
+		    public void actionPerformed(ActionEvent e) {
+		               
+		        timer.start();
+		    }
+		    }
+		 
+		    class StopListener implements ActionListener {
+		    public void actionPerformed(ActionEvent e) {
+		         
+		        timer.stop();
+		    }
+		    }
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		device.drawImage(image, 0, 0, null);
